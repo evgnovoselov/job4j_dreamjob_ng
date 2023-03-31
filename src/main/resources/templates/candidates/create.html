@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Список кандидатов</title>
+    <title>Создание резюме</title>
     <!-- libs -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
@@ -21,30 +21,36 @@
             <div class="navbar-nav">
                 <a class="nav-link" th:href="@{/}">Главная</a>
                 <a class="nav-link" th:href="@{/vacancies}">Вакансии</a>
-                <a class="nav-link active" aria-current="page" th:href="@{/candidates}">Кандидаты</a>
-                <a class="nav-link" th:href="@{/vacancies/create}">Создать вакансию</a>
-                <a class="nav-link" th:href="@{/candidates/create}">Создать резюме</a>
+                <a class="nav-link" th:href="@{/candidates}">Кандидаты</a>
+                <a class="nav-link" aria-current="page" th:href="@{/vacancies/create}">Создать вакансию</a>
+                <a class="nav-link active" aria-current="page" th:href="@{/candidates/create}">Создать резюме</a>
             </div>
         </div>
     </div>
 </nav>
 <div class="container">
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Имя</th>
-            <th scope="col">Дата создания</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="candidate : ${candidates}">
-            <th scope="row" th:text="${candidate.id}">1</th>
-            <td th:text="${candidate.name}">Mark</td>
-            <td th:text="${{candidate.creationDate}}">Date</td>
-        </tr>
-        </tbody>
-    </table>
+    <form class="mt-3">
+        <div class="mb-3">
+            <label for="name" class="form-label">Введите имя</label>
+            <input type="text" class="form-control" id="name"
+                   placeholder="Введите свое имя">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Описание резюме</label>
+            <textarea class="form-control" id="description" rows="25"
+                      placeholder="Опишите свое резюме"></textarea>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col">
+                <a class="btn btn-danger w-100" th:href="@{/candidates}" role="button">Отмена</a>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary w-100">Сохранить</button>
+            </div>
+        </div>
+    </form>
 </div>
 <!-- libs -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
