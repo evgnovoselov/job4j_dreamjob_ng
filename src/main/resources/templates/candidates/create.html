@@ -22,22 +22,22 @@
                 <a class="nav-link" th:href="@{/}">Главная</a>
                 <a class="nav-link" th:href="@{/vacancies}">Вакансии</a>
                 <a class="nav-link" th:href="@{/candidates}">Кандидаты</a>
-                <a class="nav-link" aria-current="page" th:href="@{/vacancies/create}">Создать вакансию</a>
+                <a class="nav-link" th:href="@{/vacancies/create}">Создать вакансию</a>
                 <a class="nav-link active" aria-current="page" th:href="@{/candidates/create}">Создать резюме</a>
             </div>
         </div>
     </div>
 </nav>
 <div class="container">
-    <form class="mt-3">
+    <form class="mt-3" th:action="@{/candidates/create}" method="post">
         <div class="mb-3">
             <label for="name" class="form-label">Введите имя</label>
-            <input type="text" class="form-control" id="name"
+            <input type="text" class="form-control" id="name" name="name"
                    placeholder="Введите свое имя">
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Описание резюме</label>
-            <textarea class="form-control" id="description" rows="25"
+            <textarea class="form-control" id="description" rows="25" name="description"
                       placeholder="Опишите свое резюме"></textarea>
         </div>
         <div class="row">

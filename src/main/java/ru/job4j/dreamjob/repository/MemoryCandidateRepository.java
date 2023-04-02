@@ -15,18 +15,18 @@ public class MemoryCandidateRepository implements CandidateRepository {
     private int nextId = 1;
 
     private MemoryCandidateRepository() {
-        save(new Candidate(nextId++, "Evgeny", "Description Middle Java Developer", LocalDateTime.now()));
-        save(new Candidate(nextId++, "Petr", "Description Middle+ Java Developer", LocalDateTime.now()));
-        save(new Candidate(nextId++, "Julia", "Description Senior Java Developer", LocalDateTime.now()));
-        save(new Candidate(nextId++, "Andrey", "Description Junior Java Developer", LocalDateTime.now()));
-        save(new Candidate(nextId++, "Igor", "Description Middle Java Developer", LocalDateTime.now()));
-        save(new Candidate(nextId++, "Ivan", "Description Senior Java Developer", LocalDateTime.now()));
-        save(new Candidate(nextId++, "Sergey", "Description Middle+ Java Developer", LocalDateTime.now()));
+        save(new Candidate(0, "Evgeny", "Description Middle Java Developer", LocalDateTime.now()));
+        save(new Candidate(0, "Petr", "Description Middle+ Java Developer", LocalDateTime.now()));
+        save(new Candidate(0, "Julia", "Description Senior Java Developer", LocalDateTime.now()));
+        save(new Candidate(0, "Andrey", "Description Junior Java Developer", LocalDateTime.now()));
+        save(new Candidate(0, "Igor", "Description Middle Java Developer", LocalDateTime.now()));
+        save(new Candidate(0, "Ivan", "Description Senior Java Developer", LocalDateTime.now()));
+        save(new Candidate(0, "Sergey", "Description Middle+ Java Developer", LocalDateTime.now()));
     }
 
     @Override
     public Candidate save(Candidate candidate) {
-        candidate.setId(candidate.getId());
+        candidate.setId(nextId++);
         candidates.put(candidate.getId(), candidate);
         return candidate;
     }
