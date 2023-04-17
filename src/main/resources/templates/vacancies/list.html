@@ -7,6 +7,7 @@
     <!-- libs -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
     <!-- /libs -->
 </head>
 <body>
@@ -32,6 +33,7 @@
     <table class="table">
         <thead>
         <tr>
+            <th scope="col"><i class="bi bi-square"></i></th>
             <th scope="col">#</th>
             <th scope="col">Название</th>
             <th scope="col">Дата создания</th>
@@ -39,6 +41,10 @@
         </thead>
         <tbody>
         <tr th:each="vacancy : ${vacancies}">
+            <td>
+                <span th:if="${vacancy.visible}"><i class="bi bi-check-square"></i></span>
+                <span th:if="${not vacancy.visible}"><i class="bi bi-square"></i></span>
+            </td>
             <td th:text="${vacancy.id}">1</td>
             <td><a th:href="@{/vacancies/{vacancyId}(vacancyId=${vacancy.id})}" th:text="${vacancy.title}">Mark</a></td>
             <td th:text="${{vacancy.creationDate}}">Date</td>
