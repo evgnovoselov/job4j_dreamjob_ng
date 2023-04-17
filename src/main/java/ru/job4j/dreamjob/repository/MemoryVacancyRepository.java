@@ -1,5 +1,6 @@
 package ru.job4j.dreamjob.repository;
 
+import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.Vacancy;
 
 import java.time.LocalDateTime;
@@ -8,22 +9,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Repository
 public class MemoryVacancyRepository implements VacancyRepository {
-    private static final MemoryVacancyRepository INSTANCE = new MemoryVacancyRepository();
     private int nextId = 1;
     private final Map<Integer, Vacancy> vacancies = new HashMap<>();
 
-    private MemoryVacancyRepository() {
+    public MemoryVacancyRepository() {
         save(new Vacancy(0, "Intern Java Developer", "Description Intern Java Developer", LocalDateTime.now()));
         save(new Vacancy(0, "Junior Java Developer", "Description Junior Java Developer", LocalDateTime.now()));
         save(new Vacancy(0, "Junior+ Java Developer", "Description Junior+ Java Developer", LocalDateTime.now()));
         save(new Vacancy(0, "Middle Java Developer", "Description Middle Java Developer", LocalDateTime.now()));
         save(new Vacancy(0, "Middle+ Java Developer", "Description Middle+ Java Developer", LocalDateTime.now()));
         save(new Vacancy(0, "Senior Java Developer", "Description Senior Java Developer", LocalDateTime.now()));
-    }
-
-    public static MemoryVacancyRepository getInstance() {
-        return INSTANCE;
     }
 
     @Override
