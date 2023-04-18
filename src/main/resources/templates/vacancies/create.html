@@ -40,6 +40,12 @@
             <textarea class="form-control" id="description" name="description" rows="25"
                       placeholder="Опишите требования к кандидату"></textarea>
         </div>
+        <div class="mb-3">
+            <label for="city" class="form-label">Город</label>
+            <select class="form-select" id="city" name="cityId">
+                <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}">One</option>
+            </select>
+        </div>
         <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="visible" name="visible">
             <label class="form-check-label" for="visible">Опубликовать</label>

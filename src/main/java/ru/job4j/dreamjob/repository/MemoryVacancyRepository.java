@@ -5,23 +5,23 @@ import ru.job4j.dreamjob.model.Vacancy;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class MemoryVacancyRepository implements VacancyRepository {
-    private final Map<Integer, Vacancy> vacancies = new ConcurrentHashMap<>();
+    private final ConcurrentMap<Integer, Vacancy> vacancies = new ConcurrentHashMap<>();
     private final AtomicInteger id = new AtomicInteger();
 
     public MemoryVacancyRepository() {
-        save(new Vacancy(0, "Intern Java Developer", "Description Intern Java Developer", true, LocalDateTime.now()));
-        save(new Vacancy(0, "Junior Java Developer", "Description Junior Java Developer", true, LocalDateTime.now()));
-        save(new Vacancy(0, "Junior+ Java Developer", "Description Junior+ Java Developer", true, LocalDateTime.now()));
-        save(new Vacancy(0, "Middle Java Developer", "Description Middle Java Developer", true, LocalDateTime.now()));
-        save(new Vacancy(0, "Middle+ Java Developer", "Description Middle+ Java Developer", true, LocalDateTime.now()));
-        save(new Vacancy(0, "Senior Java Developer", "Description Senior Java Developer", true, LocalDateTime.now()));
+        save(new Vacancy(0, "Intern Java Developer", "Description Intern Java Developer", 1, true, LocalDateTime.now()));
+        save(new Vacancy(0, "Junior Java Developer", "Description Junior Java Developer", 2, true, LocalDateTime.now()));
+        save(new Vacancy(0, "Junior+ Java Developer", "Description Junior+ Java Developer", 3, true, LocalDateTime.now()));
+        save(new Vacancy(0, "Middle Java Developer", "Description Middle Java Developer", 1, true, LocalDateTime.now()));
+        save(new Vacancy(0, "Middle+ Java Developer", "Description Middle+ Java Developer", 2, true, LocalDateTime.now()));
+        save(new Vacancy(0, "Senior Java Developer", "Description Senior Java Developer", 3, true, LocalDateTime.now()));
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MemoryVacancyRepository implements VacancyRepository {
     @Override
     public boolean update(Vacancy vacancy) {
         return vacancies.computeIfPresent(vacancy.getId(), (id, oldVacancy) ->
-                new Vacancy(oldVacancy.getId(), vacancy.getTitle(), vacancy.getDescription(),
+                new Vacancy(oldVacancy.getId(), vacancy.getTitle(), vacancy.getDescription(), vacancy.getCityId(),
                         vacancy.isVisible(), vacancy.getCreationDate())) != null;
     }
 

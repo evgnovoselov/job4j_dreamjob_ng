@@ -5,24 +5,24 @@ import ru.job4j.dreamjob.model.Candidate;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class MemoryCandidateRepository implements CandidateRepository {
-    private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
+    private final ConcurrentMap<Integer, Candidate> candidates = new ConcurrentHashMap<>();
     private final AtomicInteger id = new AtomicInteger();
 
     public MemoryCandidateRepository() {
-        save(new Candidate(0, "Evgeny", "Description Middle Java Developer", LocalDateTime.now()));
-        save(new Candidate(0, "Petr", "Description Middle+ Java Developer", LocalDateTime.now()));
-        save(new Candidate(0, "Julia", "Description Senior Java Developer", LocalDateTime.now()));
-        save(new Candidate(0, "Andrey", "Description Junior Java Developer", LocalDateTime.now()));
-        save(new Candidate(0, "Igor", "Description Middle Java Developer", LocalDateTime.now()));
-        save(new Candidate(0, "Ivan", "Description Senior Java Developer", LocalDateTime.now()));
-        save(new Candidate(0, "Sergey", "Description Middle+ Java Developer", LocalDateTime.now()));
+        save(new Candidate(0, "Evgeny", "Description Middle Java Developer", 1, LocalDateTime.now()));
+        save(new Candidate(0, "Petr", "Description Middle+ Java Developer", 2, LocalDateTime.now()));
+        save(new Candidate(0, "Julia", "Description Senior Java Developer", 3, LocalDateTime.now()));
+        save(new Candidate(0, "Andrey", "Description Junior Java Developer", 1, LocalDateTime.now()));
+        save(new Candidate(0, "Igor", "Description Middle Java Developer", 2, LocalDateTime.now()));
+        save(new Candidate(0, "Ivan", "Description Senior Java Developer", 3, LocalDateTime.now()));
+        save(new Candidate(0, "Sergey", "Description Middle+ Java Developer", 1, LocalDateTime.now()));
     }
 
     @Override
@@ -40,7 +40,8 @@ public class MemoryCandidateRepository implements CandidateRepository {
     @Override
     public boolean update(Candidate candidate) {
         return candidates.computeIfPresent(candidate.getId(), (id, oldCandidate) ->
-                new Candidate(oldCandidate.getId(), candidate.getName(), candidate.getDescription(), candidate.getCreationDate())) != null;
+                new Candidate(oldCandidate.getId(), candidate.getName(), candidate.getDescription(), candidate.getCityId(),
+                        candidate.getCreationDate())) != null;
     }
 
     @Override

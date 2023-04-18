@@ -7,16 +7,18 @@ public class Vacancy {
     private int id;
     private String title;
     private String description;
+    private int cityId;
     private boolean visible;
     private LocalDateTime creationDate = LocalDateTime.now();
 
     public Vacancy() {
     }
 
-    public Vacancy(int id, String title, String description, boolean visible, LocalDateTime creationDate) {
+    public Vacancy(int id, String title, String description, int cityId, boolean visible, LocalDateTime creationDate) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.cityId = cityId;
         this.visible = visible;
         this.creationDate = creationDate;
     }
@@ -43,6 +45,14 @@ public class Vacancy {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
     public boolean isVisible() {
