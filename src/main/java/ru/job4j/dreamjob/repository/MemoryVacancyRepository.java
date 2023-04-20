@@ -16,12 +16,12 @@ public class MemoryVacancyRepository implements VacancyRepository {
     private final AtomicInteger id = new AtomicInteger();
 
     public MemoryVacancyRepository() {
-        save(new Vacancy(0, "Intern Java Developer", "Description Intern Java Developer", 1, true, LocalDateTime.now()));
-        save(new Vacancy(0, "Junior Java Developer", "Description Junior Java Developer", 2, true, LocalDateTime.now()));
-        save(new Vacancy(0, "Junior+ Java Developer", "Description Junior+ Java Developer", 3, true, LocalDateTime.now()));
-        save(new Vacancy(0, "Middle Java Developer", "Description Middle Java Developer", 1, true, LocalDateTime.now()));
-        save(new Vacancy(0, "Middle+ Java Developer", "Description Middle+ Java Developer", 2, true, LocalDateTime.now()));
-        save(new Vacancy(0, "Senior Java Developer", "Description Senior Java Developer", 3, true, LocalDateTime.now()));
+        save(new Vacancy(0, "Intern Java Developer", "Description Intern Java Developer", 1, 0, true, LocalDateTime.now()));
+        save(new Vacancy(0, "Junior Java Developer", "Description Junior Java Developer", 2, 0, true, LocalDateTime.now()));
+        save(new Vacancy(0, "Junior+ Java Developer", "Description Junior+ Java Developer", 3, 0, true, LocalDateTime.now()));
+        save(new Vacancy(0, "Middle Java Developer", "Description Middle Java Developer", 1, 0, true, LocalDateTime.now()));
+        save(new Vacancy(0, "Middle+ Java Developer", "Description Middle+ Java Developer", 2, 0, true, LocalDateTime.now()));
+        save(new Vacancy(0, "Senior Java Developer", "Description Senior Java Developer", 3, 0, true, LocalDateTime.now()));
     }
 
     @Override
@@ -40,7 +40,7 @@ public class MemoryVacancyRepository implements VacancyRepository {
     public boolean update(Vacancy vacancy) {
         return vacancies.computeIfPresent(vacancy.getId(), (id, oldVacancy) ->
                 new Vacancy(oldVacancy.getId(), vacancy.getTitle(), vacancy.getDescription(), vacancy.getCityId(),
-                        vacancy.isVisible(), vacancy.getCreationDate())) != null;
+                        vacancy.getFileId(), vacancy.isVisible(), vacancy.getCreationDate())) != null;
     }
 
     @Override
