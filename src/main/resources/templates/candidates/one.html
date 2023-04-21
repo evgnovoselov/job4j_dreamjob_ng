@@ -29,23 +29,36 @@
     </div>
 </nav>
 <div class="container">
-    <form class="mt-3" th:action="@{/candidates/update}" method="post" th:object="${candidate}">
+    <form class="mt-3" th:action="@{/candidates/update}" method="post" th:object="${candidate}"
+          enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}">
-        <div class="mb-3">
-            <label for="name" class="form-label">Введите имя</label>
-            <input type="text" class="form-control" id="name" th:field="*{name}"
-                   placeholder="Введите свое имя">
+        <input type="hidden" th:field="*{fileId}">
+        <div class="row">
+            <div class="col-3">
+                <img th:src="@{/files/{fileId}(fileId=*{fileId})}" class="img-fluid" alt="Image">
+                <div class="mb-3">
+                    <label for="file" class="form-label">Фото</label>
+                    <input class="form-control" type="file" id="file" name="file">
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Введите имя</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}"
+                           placeholder="Введите свое имя">
+                </div>
+                <div class="mb-3">
+                    <label for="city" class="form-label">Город</label>
+                    <select class="form-select" id="city" th:field="*{cityId}">
+                        <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}">One</option>
+                    </select>
+                </div>
+            </div>
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Описание резюме</label>
             <textarea class="form-control" id="description" rows="25" th:field="*{description}"
                       placeholder="Опишите свое резюме"></textarea>
-        </div>
-        <div class="mb-3">
-            <label for="city" class="form-label">Город</label>
-            <select class="form-select" id="city" th:field="*{cityId}">
-                <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}">One</option>
-            </select>
         </div>
         <div class="row">
             <div class="col"></div>
