@@ -16,13 +16,13 @@ public class MemoryCandidateRepository implements CandidateRepository {
     private final AtomicInteger id = new AtomicInteger();
 
     public MemoryCandidateRepository() {
-        save(new Candidate(0, "Evgeny", "Description Middle Java Developer", 1, LocalDateTime.now()));
-        save(new Candidate(0, "Petr", "Description Middle+ Java Developer", 2, LocalDateTime.now()));
-        save(new Candidate(0, "Julia", "Description Senior Java Developer", 3, LocalDateTime.now()));
-        save(new Candidate(0, "Andrey", "Description Junior Java Developer", 1, LocalDateTime.now()));
-        save(new Candidate(0, "Igor", "Description Middle Java Developer", 2, LocalDateTime.now()));
-        save(new Candidate(0, "Ivan", "Description Senior Java Developer", 3, LocalDateTime.now()));
-        save(new Candidate(0, "Sergey", "Description Middle+ Java Developer", 1, LocalDateTime.now()));
+        save(new Candidate(0, "Evgeny", "Description Middle Java Developer", 1, 0, LocalDateTime.now()));
+        save(new Candidate(0, "Petr", "Description Middle+ Java Developer", 2, 0, LocalDateTime.now()));
+        save(new Candidate(0, "Julia", "Description Senior Java Developer", 3, 0, LocalDateTime.now()));
+        save(new Candidate(0, "Andrey", "Description Junior Java Developer", 1, 0, LocalDateTime.now()));
+        save(new Candidate(0, "Igor", "Description Middle Java Developer", 2, 0, LocalDateTime.now()));
+        save(new Candidate(0, "Ivan", "Description Senior Java Developer", 3, 0, LocalDateTime.now()));
+        save(new Candidate(0, "Sergey", "Description Middle+ Java Developer", 1, 0, LocalDateTime.now()));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class MemoryCandidateRepository implements CandidateRepository {
     public boolean update(Candidate candidate) {
         return candidates.computeIfPresent(candidate.getId(), (id, oldCandidate) ->
                 new Candidate(oldCandidate.getId(), candidate.getName(), candidate.getDescription(), candidate.getCityId(),
-                        candidate.getCreationDate())) != null;
+                        candidate.getFileId(), candidate.getCreationDate())) != null;
     }
 
     @Override

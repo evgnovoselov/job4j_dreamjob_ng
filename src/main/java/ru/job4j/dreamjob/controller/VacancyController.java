@@ -9,7 +9,6 @@ import ru.job4j.dreamjob.model.Vacancy;
 import ru.job4j.dreamjob.service.CityService;
 import ru.job4j.dreamjob.service.VacancyService;
 
-import java.io.IOException;
 import java.util.Optional;
 
 @Controller
