@@ -44,7 +44,7 @@ public class SimpleVacancyService implements VacancyService {
     @Override
     public boolean update(Vacancy vacancy, FileDto image) {
         boolean isNewFileEmpty = image.getContent().length == 0;
-        if (isNewFileEmpty){
+        if (isNewFileEmpty) {
             return vacancyRepository.update(vacancy);
         }
         int oldFileId = vacancy.getFileId();
