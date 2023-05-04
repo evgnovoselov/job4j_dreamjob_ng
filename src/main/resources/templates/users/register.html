@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Список кандидатов</title>
+    <title>Работа мечты!</title>
     <!-- libs -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
@@ -21,7 +21,7 @@
             <div class="navbar-nav me-auto">
                 <a class="nav-link" th:href="@{/}">Главная</a>
                 <a class="nav-link" th:href="@{/vacancies}">Вакансии</a>
-                <a class="nav-link active" aria-current="page" th:href="@{/candidates}">Кандидаты</a>
+                <a class="nav-link" th:href="@{/candidates}">Кандидаты</a>
                 <a class="nav-link" th:href="@{/vacancies/create}">Создать вакансию</a>
                 <a class="nav-link" th:href="@{/candidates/create}">Создать резюме</a>
             </div>
@@ -32,23 +32,21 @@
     </div>
 </nav>
 <div class="container">
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Имя</th>
-            <th scope="col">Дата создания</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="candidate : ${candidates}">
-            <td th:text="${candidate.id}">1</td>
-            <td><a th:href="@{/candidates/{candidateId}(candidateId=${candidate.id})}"
-                   th:text="${candidate.name}">Mark</a></td>
-            <td th:text="${{candidate.creationDate}}">Date</td>
-        </tr>
-        </tbody>
-    </table>
+    <form class="mt-3" th:action="@{/users/register}" method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Имя</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Иван" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Почта</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Пароль</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Зарегистрировать</button>
+    </form>
 </div>
 <!-- libs -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
