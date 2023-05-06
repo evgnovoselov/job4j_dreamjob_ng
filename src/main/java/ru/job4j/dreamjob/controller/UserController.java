@@ -1,6 +1,5 @@
 package ru.job4j.dreamjob.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.service.UserService;
-import ru.job4j.dreamjob.utility.Utility;
 
 import java.util.Optional;
 
@@ -24,8 +22,7 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public String getRegistrationPage(Model model, HttpSession session) {
-        Utility.addUserFromSessionInModel(model, session);
+    public String getRegistrationPage() {
         return "users/register";
     }
 
@@ -33,28 +30,25 @@ public class UserController {
     public String register(@ModelAttribute User user, Model model, HttpSession session) {
         Optional<User> savedUser = userService.save(user);
         if (savedUser.isEmpty()) {
-            model.addAttribute("message", "Пользователь с такой почтой уже существует");
-            Utility.addUserFromSessionInModel(model, session);
-            return "errors/404";
+            model.addAttribute("error", "Пользователь с такой почтой уже существует");
+            return "users/register";
         }
+        session.setAttribute("user", savedUser.get());
         return "redirect:/vacancies";
     }
 
     @GetMapping("/login")
-    public String getLoginPage(Model model, HttpSession session) {
-        Utility.addUserFromSessionInModel(model, session);
+    public String getLoginPage() {
         return "users/login";
     }
 
     @PostMapping("/login")
-    public String loginUser(@ModelAttribute User user, Model model, HttpServletRequest request) {
+    public String loginUser(@ModelAttribute User user, Model model, HttpSession session) {
         Optional<User> userOptional = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
         if (userOptional.isEmpty()) {
             model.addAttribute("error", "Почта или пароль введены неверно");
-            Utility.addUserFromSessionInModel(model, request.getSession());
             return "users/login";
         }
-        HttpSession session = request.getSession();
         session.setAttribute("user", userOptional.get());
         return "redirect:/vacancies";
     }
