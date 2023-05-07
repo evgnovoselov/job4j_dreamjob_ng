@@ -128,4 +128,11 @@ public class VacancyControllerTest {
         assertThat(view).isEqualTo("errors/404");
         assertThat(message).isEqualTo("Вакансия с указанным идентификатором не найдена");
     }
+
+    @Test
+    public void whenUpdateVacancyWithoutFileThenUpdatedVacancy() {
+        Vacancy vacancy = new Vacancy(1, "title", "description", 1, 1, true, LocalDateTime.now());
+        Vacancy updatedVacancy = new Vacancy(vacancy.getId(), "title new", "description new", 2, 1, true, vacancy.getCreationDate());
+        ConcurrentModel model = new ConcurrentModel();
+    }
 }
