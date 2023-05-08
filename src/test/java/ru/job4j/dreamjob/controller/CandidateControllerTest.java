@@ -1,13 +1,12 @@
 package ru.job4j.dreamjob.controller;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.web.multipart.MultipartFile;
 import ru.job4j.dreamjob.model.Candidate;
+import ru.job4j.dreamjob.model.City;
 import ru.job4j.dreamjob.service.CandidateService;
 import ru.job4j.dreamjob.service.CityService;
 
@@ -15,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -43,7 +43,22 @@ public class CandidateControllerTest {
         String view = candidateController.getAll(model);
         Collection<Candidate> actualCandidates = (Collection<Candidate>) model.getAttribute("candidates");
 
-        Assertions.assertThat(view).isEqualTo("candidates/list");
-        Assertions.assertThat(actualCandidates).isEqualTo(expectedCandidates);
+        assertThat(view).isEqualTo("candidates/list");
+        assertThat(actualCandidates).isEqualTo(expectedCandidates);
+    }
+
+    @Test
+    public void whenRequestCandidateCreationPageThenGetPageWithCities() {
+        City city1 = new City(1, "Moscow");
+        City city2 = new City(2, "Санкт-Петербург");
+        List<City> expectedCities = List.of(city1, city2);
+        when(cityService.findAll()).thenReturn(expectedCities);
+
+        ConcurrentModel model = new ConcurrentModel();
+        String view = candidateController.getCreationPage(model);
+        Collection<City> actualCities = (Collection<City>) model.getAttribute("cities");
+
+        assertThat(view).isEqualTo("candidates/create");
+        assertThat(actualCities).isEqualTo(expectedCities);
     }
 }
