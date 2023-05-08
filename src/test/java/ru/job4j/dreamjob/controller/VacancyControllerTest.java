@@ -130,9 +130,77 @@ public class VacancyControllerTest {
     }
 
     @Test
-    public void whenUpdateVacancyWithoutFileThenUpdatedVacancy() {
-        Vacancy vacancy = new Vacancy(1, "title", "description", 1, 1, true, LocalDateTime.now());
-        Vacancy updatedVacancy = new Vacancy(vacancy.getId(), "title new", "description new", 2, 1, true, vacancy.getCreationDate());
+    public void whenUpdateVacancyWithFileNullThenRedirectVacancies() {
+        FileDto fileDto = new FileDto("", new byte[0]);
+        ArgumentCaptor<FileDto> fileDtoArgumentCaptor = ArgumentCaptor.forClass(FileDto.class);
         ConcurrentModel model = new ConcurrentModel();
+        when(vacancyService.update(any(), fileDtoArgumentCaptor.capture())).thenReturn(true);
+
+        String view = vacancyController.update(new Vacancy(), null, model);
+        FileDto actualFileDto = fileDtoArgumentCaptor.getValue();
+
+        assertThat(view).isEqualTo("redirect:/vacancies");
+        assertThat(actualFileDto).usingRecursiveComparison().isEqualTo(fileDto);
+    }
+
+    @Test
+    public void whenUpdateVacancyWithFileThenRedirectVacancies() throws IOException {
+        ConcurrentModel model = new ConcurrentModel();
+        FileDto fileDto = new FileDto(testFile.getOriginalFilename(), testFile.getBytes());
+        ArgumentCaptor<FileDto> fileDtoArgumentCaptor = ArgumentCaptor.forClass(FileDto.class);
+        when(vacancyService.update(any(), fileDtoArgumentCaptor.capture())).thenReturn(true);
+
+        String view = vacancyController.update(new Vacancy(), testFile, model);
+        FileDto actualFileDto = fileDtoArgumentCaptor.getValue();
+
+        assertThat(view).isEqualTo("redirect:/vacancies");
+        assertThat(actualFileDto).usingRecursiveComparison().isEqualTo(fileDto);
+    }
+
+    @Test
+    public void whenUpdatedVacancyIsNotUpdatedThenGetErrorPageWithMessage() {
+        when(vacancyService.update(any(), any())).thenReturn(false);
+
+        ConcurrentModel model = new ConcurrentModel();
+        String view = vacancyController.update(new Vacancy(), testFile, model);
+        String message = (String) model.getAttribute("message");
+
+        assertThat(view).isEqualTo("errors/404");
+        assertThat(message).isEqualTo("Вакансия с указанным идентификатором не найдена");
+    }
+
+    @Test
+    public void whenUpdatedVacancyExceptionThenGetErrorPageWithMessage() {
+        RuntimeException exception = new RuntimeException("Error updated vacancy");
+        when(vacancyService.update(any(), any())).thenThrow(exception);
+
+        ConcurrentModel model = new ConcurrentModel();
+        String view = vacancyController.update(new Vacancy(), testFile, model);
+        String actualExceptionMessage = (String) model.getAttribute("message");
+
+        assertThat(view).isEqualTo("errors/404");
+        assertThat(actualExceptionMessage).isEqualTo(exception.getMessage());
+    }
+
+    @Test
+    public void whenDeletedVacancyThenRedirectVacancies() {
+        when(vacancyService.deleteById(any(Integer.class))).thenReturn(true);
+
+        ConcurrentModel model = new ConcurrentModel();
+        String view = vacancyController.delete(model, 1);
+
+        assertThat(view).isEqualTo("redirect:/vacancies");
+    }
+
+    @Test
+    public void whenDeletedVacancyNotHaveIdThenGetErrorPageWithMessage() {
+        when(vacancyService.deleteById(any(Integer.class))).thenReturn(false);
+
+        ConcurrentModel model = new ConcurrentModel();
+        String view = vacancyController.delete(model, 1);
+        String message = (String) model.getAttribute("message");
+
+        assertThat(view).isEqualTo("errors/404");
+        assertThat(message).isEqualTo("Вакансия с указанным идентификатором не найдена");
     }
 }
