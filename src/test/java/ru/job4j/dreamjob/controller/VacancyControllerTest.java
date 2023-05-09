@@ -126,20 +126,42 @@ public class VacancyControllerTest {
         String message = (String) model.getAttribute("message");
 
         assertThat(view).isEqualTo("errors/404");
-        assertThat(message).isEqualTo("Вакансия с указанным идентификатором не найдена");
+        assertThat(message).isEqualTo("Вакансия с указаным идентификатором не найдена.");
     }
 
     @Test
     public void whenUpdateVacancyWithFileNullThenRedirectVacancies() {
+        Vacancy vacancy = new Vacancy(1, "title 1", "description 1", 1, 2, true, LocalDateTime.now());
         FileDto fileDto = new FileDto("", new byte[0]);
+        ArgumentCaptor<Vacancy> vacancyArgumentCaptor = ArgumentCaptor.forClass(Vacancy.class);
         ArgumentCaptor<FileDto> fileDtoArgumentCaptor = ArgumentCaptor.forClass(FileDto.class);
-        ConcurrentModel model = new ConcurrentModel();
-        when(vacancyService.update(any(), fileDtoArgumentCaptor.capture())).thenReturn(true);
+        when(vacancyService.update(vacancyArgumentCaptor.capture(), fileDtoArgumentCaptor.capture())).thenReturn(true);
 
-        String view = vacancyController.update(new Vacancy(), null, model);
+        ConcurrentModel model = new ConcurrentModel();
+        String view = vacancyController.update(vacancy, null, model);
+        Vacancy actualVacancy = vacancyArgumentCaptor.getValue();
         FileDto actualFileDto = fileDtoArgumentCaptor.getValue();
 
         assertThat(view).isEqualTo("redirect:/vacancies");
+        assertThat(actualVacancy).usingRecursiveComparison().isEqualTo(vacancy);
+        assertThat(actualFileDto).usingRecursiveComparison().isEqualTo(fileDto);
+    }
+
+    @Test
+    public void whenUpdateVacancyWithFileEmptyThenRedirectVacancies() {
+        Vacancy vacancy = new Vacancy(1, "title 1", "description 1", 1, 2, true, LocalDateTime.now());
+        FileDto fileDto = new FileDto("", new byte[0]);
+        ArgumentCaptor<Vacancy> vacancyArgumentCaptor = ArgumentCaptor.forClass(Vacancy.class);
+        ArgumentCaptor<FileDto> fileDtoArgumentCaptor = ArgumentCaptor.forClass(FileDto.class);
+        when(vacancyService.update(vacancyArgumentCaptor.capture(), fileDtoArgumentCaptor.capture())).thenReturn(true);
+
+        ConcurrentModel model = new ConcurrentModel();
+        String view = vacancyController.update(vacancy, new MockMultipartFile("test", new byte[0]), model);
+        Vacancy actualVacancy = vacancyArgumentCaptor.getValue();
+        FileDto actualFileDto = fileDtoArgumentCaptor.getValue();
+
+        assertThat(view).isEqualTo("redirect:/vacancies");
+        assertThat(actualVacancy).usingRecursiveComparison().isEqualTo(vacancy);
         assertThat(actualFileDto).usingRecursiveComparison().isEqualTo(fileDto);
     }
 
@@ -166,7 +188,7 @@ public class VacancyControllerTest {
         String message = (String) model.getAttribute("message");
 
         assertThat(view).isEqualTo("errors/404");
-        assertThat(message).isEqualTo("Вакансия с указанным идентификатором не найдена");
+        assertThat(message).isEqualTo("Вакансия с указаным идентификатором не найдена.");
     }
 
     @Test
@@ -201,6 +223,6 @@ public class VacancyControllerTest {
         String message = (String) model.getAttribute("message");
 
         assertThat(view).isEqualTo("errors/404");
-        assertThat(message).isEqualTo("Вакансия с указанным идентификатором не найдена");
+        assertThat(message).isEqualTo("Вакансия с указаным идентификатором не найдена.");
     }
 }

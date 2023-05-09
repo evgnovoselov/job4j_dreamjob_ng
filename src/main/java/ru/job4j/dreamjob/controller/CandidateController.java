@@ -65,7 +65,7 @@ public class CandidateController {
                          Model model) {
         try {
             FileDto fileDto;
-            if (file.isEmpty()) {
+            if (file == null || file.isEmpty()) {
                 fileDto = new FileDto("", new byte[0]);
             } else {
                 fileDto = new FileDto(file.getOriginalFilename(), file.getBytes());
