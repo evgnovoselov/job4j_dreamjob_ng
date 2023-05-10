@@ -51,7 +51,7 @@ public class CandidateController {
     public String getById(Model model, @PathVariable int id) {
         Optional<Candidate> candidateOptional = candidateService.findById(id);
         if (candidateOptional.isEmpty()) {
-            model.addAttribute("message", "Резюме с указаным идентификатором не найдено.");
+            model.addAttribute("message", "Резюме с указанным идентификатором не найдено.");
             return "errors/404";
         }
         model.addAttribute("candidate", candidateOptional.get());
@@ -65,14 +65,14 @@ public class CandidateController {
                          Model model) {
         try {
             FileDto fileDto;
-            if (file.isEmpty()) {
+            if (file == null || file.isEmpty()) {
                 fileDto = new FileDto("", new byte[0]);
             } else {
                 fileDto = new FileDto(file.getOriginalFilename(), file.getBytes());
             }
             boolean isUpdated = candidateService.update(candidate, fileDto);
             if (!isUpdated) {
-                model.addAttribute("message", "Резюме с указаным идентификатором не найдено.");
+                model.addAttribute("message", "Резюме с указанным идентификатором не найдено.");
                 return "errors/404";
             }
             return "redirect:/candidates";
@@ -86,7 +86,7 @@ public class CandidateController {
     public String delete(Model model, @PathVariable int id) {
         boolean isDeleted = candidateService.deleteById(id);
         if (!isDeleted) {
-            model.addAttribute("message", "Резюме с указаным идентификатором не найдено.");
+            model.addAttribute("message", "Резюме с указанным идентификатором не найдено.");
             return "errors/404";
         }
         return "redirect:/candidates";
