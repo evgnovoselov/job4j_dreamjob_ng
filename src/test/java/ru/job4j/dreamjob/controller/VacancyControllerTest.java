@@ -126,7 +126,7 @@ public class VacancyControllerTest {
         String message = (String) model.getAttribute("message");
 
         assertThat(view).isEqualTo("errors/404");
-        assertThat(message).isEqualTo("Вакансия с указаным идентификатором не найдена.");
+        assertThat(message).isEqualTo("Вакансия с указанным идентификатором не найдена.");
     }
 
     @Test
@@ -188,7 +188,7 @@ public class VacancyControllerTest {
         String message = (String) model.getAttribute("message");
 
         assertThat(view).isEqualTo("errors/404");
-        assertThat(message).isEqualTo("Вакансия с указаным идентификатором не найдена.");
+        assertThat(message).isEqualTo("Вакансия с указанным идентификатором не найдена.");
     }
 
     @Test
@@ -223,6 +223,6 @@ public class VacancyControllerTest {
         String message = (String) model.getAttribute("message");
 
         assertThat(view).isEqualTo("errors/404");
-        assertThat(message).isEqualTo("Вакансия с указаным идентификатором не найдена.");
+        assertThat(message).isEqualTo("Вакансия с указанным идентификатором не найдена.");
     }
 }

@@ -127,7 +127,7 @@ public class CandidateControllerTest {
         String actualMessage = (String) model.getAttribute("message");
 
         assertThat(view).isEqualTo("errors/404");
-        assertThat(actualMessage).isEqualTo("Резюме с указаным идентификатором не найдено.");
+        assertThat(actualMessage).isEqualTo("Резюме с указанным идентификатором не найдено.");
     }
 
     @Test
@@ -200,7 +200,7 @@ public class CandidateControllerTest {
         FileDto actualFileDto = fileDtoArgumentCaptor.getValue();
 
         assertThat(view).isEqualTo("errors/404");
-        assertThat(actualMessage).isEqualTo("Резюме с указаным идентификатором не найдено.");
+        assertThat(actualMessage).isEqualTo("Резюме с указанным идентификатором не найдено.");
         assertThat(actualCandidate).usingRecursiveComparison().isEqualTo(candidate);
         assertThat(actualFileDto).usingRecursiveComparison().isEqualTo(fileDto);
     }
@@ -236,6 +236,6 @@ public class CandidateControllerTest {
         String message = (String) model.getAttribute("message");
 
         assertThat(view).isEqualTo("errors/404");
-        assertThat(message).isEqualTo("Резюме с указаным идентификатором не найдено.");
+        assertThat(message).isEqualTo("Резюме с указанным идентификатором не найдено.");
     }
 }
